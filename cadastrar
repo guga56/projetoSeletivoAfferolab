@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<html>
+<head>
+<title>Cadastro de Produto</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+ <script type="text/javascript" src="js/bootstrap.js" ></script>
+</head>
+<body>
+
+  <h2 class="well">Cadastro do CRUD</h2>
+
+  <p>
+	<a href="consulta.jsp" class="btn btn-danger">
+	    <span class="glyphicon glyphicon-pencil"></span> conusltar
+	</a>
+	<a href="index.jsp" class="btn btn-success">
+		<span class="glyphicon glyphicon-list"></span>  Voltar para pagina inicial
+	</a>
+  </p>
+
+  <div class="container">
+    <div class="col-sm-8 col-sm-offset-2">
+     <div class="panel panel-primary">
+       <div class="panel-heading">
+         <div class="panel-tittle">Sistema com Cadastro com CRUD</div>
+       </div>
+       <div class="panel-body">
+       
+           <form name="form1" method="post" action="Controle?cmd=gravar">
+           
+               <div class="form-group">
+                 Nome do Produto:
+                 <input type="text" name="nomeprod" placeholder="Digite o Nome" value="" size="35" required="required" title="Entre com nome do produto" pattern="[a-z A-ZÀ-Üá-ü]{3,35}" class="form-control">
+               </div>
+           
+               <div class="form-group">
+                 Descrição:
+                 <textarea name="descricao" rows="20" cols="20"></textarea>
+               </div>
+               
+               <div class="form-group">
+                 Preço:
+                 <input type="number" name="preco" placeholder="Digite o Preço" value="" size="10" required="required" title="Digite um preço" class="form-control">
+               </div>
+               
+               <input type="submit" value="Gravar Dados" class="btn btn-success">
+               <p/>
+               
+               <h4 class="well">${msg}</h4>
+           
+           </form>
+       
+       </div>
+     </div>
+    </div>
+  </div>
+
+</body>
+</html>
