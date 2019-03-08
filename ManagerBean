@@ -1,0 +1,26 @@
+package manager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import persistence.ProdutoDao;
+import entity.Produto;
+
+public class ManagerBean {
+
+	private List<Produto> listaProduto;
+
+	public List<Produto> getListaProduto() {
+		listaProduto = new ArrayList<Produto>();
+		try{
+			listaProduto = new ProdutoDao().listar();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return listaProduto;
+	}
+
+	public void setListaProduto(List<Produto> listaProduto) {
+		this.listaProduto = listaProduto;
+	}
+}
