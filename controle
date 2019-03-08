@@ -1,0 +1,107 @@
+package control;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import persistence.ProdutoDao;
+import entity.Produto;
+
+@WebServlet("/Controle")
+public class Controle extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+    public Controle() {
+        super();
+        
+    }
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String cmd = request.getParameter("cmd");
+		if(cmd.equalsIgnoreCase("excluir")){
+			excluir(request, response);
+		}else if(cmd.equalsIgnoreCase("alterar1")){
+			alterar1(request, response);
+		}
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String cmd = request.getParameter("cmd");
+		if(cmd.equalsIgnoreCase("gravar")){
+			gravar(request, response);
+		}else if(cmd.equalsIgnoreCase("alterar2")){
+			alterar2(request, response);
+		}
+	}
+	
+    protected void gravar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   
+	    try{
+	  
+	        Produto prod = new Produto(null, request.getParameter("nomeprod"), request.getParameter("descricao"), new Double(request.getParameter("preco")));
+	        
+	        new ProdutoDao().create(prod);
+	        
+	        request.setAttribute("msg", "Dados Gravados!");
+	    	
+	    }catch(Exception ex){
+	    	ex.printStackTrace();
+	    }finally{
+	    	request.getRequestDispatcher("cadastro.jsp").forward(request, response);
+	    }
+	}
+    
+    protected void excluir(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+			
+			Integer id = new Integer(request.getParameter("cod"));
+			new ProdutoDao().deletar(id);
+			
+			request.setAttribute("msg", "Produto exlcuido com sucesso");
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			request.getRequestDispatcher("consulta.jsp").forward(request, response);
+		}
+	}
+    
+    protected void alterar1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+			Produto p = new ProdutoDao().findById(new Integer(request.getParameter("cod")));
+			
+			request.setAttribute("produto", p);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			request.getRequestDispatcher("alteracao.jsp").forward(request, response);
+		}
+   	}
+    
+    protected void alterar2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Produto prod = new Produto();
+    	try{
+			
+    		prod.setIdProduto(new Integer(request.getParameter("idProduto")));
+    		prod.setNomeprod(request.getParameter("nomeprod"));
+    		prod.setDescricao(request.getParameter("descricao"));
+    		prod.setPreco(new Double(request.getParameter("preco")));
+    		
+    		new ProdutoDao().update(prod);
+    		request.setAttribute("msg", "Produto alterado com sucesso!");
+    		
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			request.getRequestDispatcher("consulta.jsp").forward(request, response);
+		}
+   	}
+
+}
