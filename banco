@@ -1,0 +1,10 @@
+create database processoafferolab;
+use processoafferolab;
+
+create table produto(
+idProduto           integer       primary key   auto_increment,
+nomeprod            varchar(35)    not null,
+descricao           varchar(500)   not null,
+preco               double);
+
+desc produto;
