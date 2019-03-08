@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<html>
+<head>
+<title>Alterar de Produto</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+ <script type="text/javascript" src="js/bootstrap.js" ></script>
+</head>
+<body>
+
+  <h2 class="well">Cadastro do CRUD</h2>
+
+  <p>
+	<a href="consulta.jsp" class="btn btn-danger">
+	    <span class="glyphicon glyphicon-pencil"></span> conusltar
+	</a>
+  </p>
+
+  <div class="container">
+    <div class="col-sm-8 col-sm-offset-2">
+     <div class="panel panel-primary">
+       <div class="panel-heading">
+         <div class="panel-tittle">Sistema com Cadastro com CRUD</div>
+       </div>
+       <div class="panel-body">
+       
+           <form name="form1" method="post" action="Controle?cmd=alterar2">
+           
+               <div class="form-group">
+                 Id do Produto:
+                 <input type="hidden" name="idProduto" value="${produto.idProduto}" class="form-control">
+               </div>
+           
+               <div class="form-group">
+                 Nome do Produto:
+                 <input type="text" name="nomeprod" value="${produto.nomeprod}" size="35" class="form-control">
+               </div>
+           
+               <div class="form-group">
+                 Descrição:
+                 <input type="text" name="descricao" value="${produto.descricao}" class="form=control"/> 
+               </div>
+               
+               <div class="form-group">
+                 Preço:
+                 <input type="number" name="preco" value="${produto.preco}" value="" class="form-control">
+               </div>
+               
+               <input type="submit" value="Alterar Dados" class="btn btn-success">
+               <p/>
+               
+               <h4 class="well">${msg}</h4>
+           
+           </form>
+       
+       </div>
+     </div>
+    </div>
+  </div>
+
+</body>
+</html>
