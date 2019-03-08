@@ -1,0 +1,100 @@
+package persistence;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import entity.Produto;
+
+public class ProdutoDao extends Dao{
+
+	public void create(Produto p) throws Exception{
+		open();
+		stmt = con.prepareStatement("insert into produto values(null,?,?,?)");
+		stmt.setString(1, p.getNomeprod());
+		stmt.setString(2, p.getDescricao());
+		stmt.setDouble(3, p.getPreco());
+		stmt.execute();
+		stmt.close();
+		close();
+	}
+	
+	public void deletar(Integer cod) throws Exception{
+		open();
+		stmt = con.prepareStatement("delete from produto where idProduto =?");
+		stmt.setInt(1, cod);
+		stmt.execute();
+		stmt.close();
+		close();
+	}
+	
+	public void update(Produto p) throws Exception{
+		open();
+		stmt = con.prepareStatement("update produto set nomeprod=?, descricao=?, preco=? where idProduto=?");
+		stmt.setString(1, p.getNomeprod());
+		stmt.setString(2, p.getDescricao());
+		stmt.setDouble(3, p.getPreco());
+		stmt.setInt(4, p.getIdProduto());
+		stmt.execute();
+		stmt.close();
+		close();
+	}
+	
+	public List<Produto> listar() throws Exception{
+		open();
+		List<Produto> listaProduto = new ArrayList<Produto>();
+		stmt = con.prepareStatement("select * from produto");
+		rs = stmt.executeQuery();
+		while (rs.next()) {
+			Produto p = new Produto();
+			p.setIdProduto(rs.getInt(1));
+			p.setNomeprod(rs.getString(2));
+			p.setDescricao(rs.getString(3));
+			p.setPreco(rs.getDouble(4));
+			listaProduto.add(p);
+		}
+		close();
+		return listaProduto;
+	}
+	
+	public Produto findById(Integer cod) throws Exception{
+		open();
+		stmt = con.prepareStatement("select * from produto where idProduto = ?");
+		stmt.setInt(1, cod);
+		rs = stmt.executeQuery();
+		Produto prod = null;
+		if(rs.next()) {
+			prod = new Produto();
+			prod.setIdProduto(rs.getInt(1));
+			prod.setNomeprod(rs.getString(2));
+			prod.setDescricao(rs.getString(3));
+			prod.setPreco(rs.getDouble(4));
+		}
+		close();
+		return prod;
+	}
+	
+	/*
+	 * teste trival para ver se o banco de dados está funcionando
+	public static void main(String[] args) {
+		try{
+			
+			ProdutoDao pd = new ProdutoDao();
+			
+			
+			
+			Produto pr = new Produto(null,"calca","calca comprida",45.);
+			
+			pd.deletar(2);
+			
+			System.out.println("Dados excluidos!");
+			
+			//System.out.println("Produto cadastrado com sucesso!");
+			
+			//System.out.println(pd.listar());
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	*/
+}
